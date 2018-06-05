@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <title>SPMAP</title>
     <style>
         body{
-   
+            overflow: hidden;
         }
         canvas {
             background-color: #63b9f7;
@@ -84,6 +87,7 @@
             "C 860 600 856 602 820 600 F")
 
         ctx.stroke(petrogradka);
+        
         ctx.fill(petrogradka);
 
         let center = new Path2D("M 1140 572 L 1180 574 C 1180 574 1220 570 1260 540 L 1300 510" +
@@ -113,6 +117,7 @@
             "C 886 580 880 590 900 597 F")
 
         ctx.stroke(krepost);
+        ctx.fillStyle = '#f7dc92'
         ctx.fill(krepost);
     }
 
@@ -124,14 +129,16 @@
 
         scale = event.delataY > 0 ? scale + wheel : scale - wheel;
 
-        canvas.width = scale * width * pixelRatio; 
-        canvas.height = scale * height * pixelRatio; 
-        canvas.style.width = `${scale * width}px`; 
-        canvas.style.height = `${scale * height}px`; 
-        ctx.mozImageSmoothingEnabled = false; 
-        ctx.imageSmoothingEnabled = false; 
-        ctx.scale(scale * pixelRatio, scale * pixelRatio); 
-        draw()
+        if (scale < 2.5 && scale > 0.4 ) {
+            canvas.width = scale * width * pixelRatio;
+            canvas.height = scale * height * pixelRatio;
+            canvas.style.width = `${scale * width}px`;
+            canvas.style.height = `${scale * height}px`;
+            ctx.mozImageSmoothingEnabled = false;
+            ctx.imageSmoothingEnabled = false;
+            ctx.scale(scale * pixelRatio, scale * pixelRatio);
+            draw()
+        }
 
     }
 
@@ -166,8 +173,30 @@
     }
    
     draw()
+ 
+    let mouseDownX = 0
+    let mouseDownY = 0
+    let offsetX = 0
+    let offsetY = 0
 
+    canvas.onmousedown = function(event){
+        if (canvas.width > window.innerWidth || canvas.height > window.innerHeight){
+            mouseDownX = event.clientX
+            mouseDownY = event.clientY
+        }
+    }
+    canvas.onmouseup = function(event){
+        let deltaX = Math.abs(mouseDownX - event.clientX)
+        let deltaY = Math.abs(mouseDownY - event.clientY)
+        if (deltaX > deltaY){
+            offsetX = event.clientX < mouseDownX ? deltaX + offsetX : deltaX > offsetX ? 0 : deltaX
+            window.scroll(offsetX, window.scrollY)
+        } else {
+            offsetY = event.clientY < mouseDownY ? deltaY + offsetY : deltaY > offsetY ? 0 : deltaY
+            window.scroll(window.scrollX, offsetY)
+        }
+    }
 </script>
-<!--script type="text/javascript" src="./canvaszoom.js"></script-->
+
 </body>
 </html>
