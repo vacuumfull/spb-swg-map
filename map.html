@@ -111,6 +111,21 @@
         ctx.stroke(center);
         ctx.fill(center);
 
+        ctx.strokeStyle = '#63b9f7';
+        ctx.lineWidth = 3;
+        let obvodnik = new Path2D("M 610 1024 L 950 1030 1070 950 1090 950 C 1090 950 1150 975 1190 970" +
+        "C 1190 970 1235 970 1270 960 L 1400 910")
+        ctx.stroke(obvodnik)
+
+        let fontanka = new Path2D("M 646 950 L 670 958 714 952 720 945 800 954 C 800 954 940 890 960 872" + 
+        "L 1060 795 C 1060 795 1076 780 1078 760 C 1078 760 1090 725 1075 700 L 1050 662 L 1040 590")
+        ctx.stroke(fontanka)
+
+        let gribych = new Path2D("M 1050 662 C 1050 662 1030 680 1000 670 L 980 770 930 800" +
+        "C 930 800 920 805 924 820 L 924 835 L 914 845 L 860 830 C 860 830 835 825 845 845 L 860 864" + 
+        "C 860 864 870 872 855 884 C 855 884 850 887 826 898 C 826 898 800 880 770 898 L 737 930 L 733 945")
+        ctx.stroke(gribych)
+
         ctx.strokeStyle = 'white';
         ctx.lineWidth = 2;
         let nevskiy = new Path2D("M 1340 855 L 1315 868 1200 790 900 717 C 900 717 915 708 900 698 L 870 660")
